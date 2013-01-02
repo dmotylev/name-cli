@@ -1,4 +1,4 @@
-package client
+package api
 
 import (
 	"encoding/json"
@@ -45,7 +45,7 @@ func (d *domains) UnmarshalJSON(data []byte) error {
 	return err
 }
 
-func (c *Client) ListDomains() (map[string]Domain, error) {
+func (c *EndPoint) ListDomains() (map[string]Domain, error) {
 	req, err := c.newRequest("GET", "/api/domain/list", nil)
 	if err != nil {
 		return nil, err

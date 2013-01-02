@@ -1,4 +1,4 @@
-package client
+package api
 
 import (
 	"crypto/tls"
@@ -63,6 +63,10 @@ func (d DateTime) String() string {
 	return time.Time(d).String()
 }
 
+func (d DateTime) Format(layout string) string {
+	return time.Time(d).Format(layout)
+}
+
 // 100 command successful
 // 203 required parameter missing
 // 204 parameter value error
@@ -89,14 +93,14 @@ func (s *Status) error() error {
 	return s
 }
 
-type Client struct {
+type EndPoint struct {
 	http         *http.Client
 	urlStr       string
 	sessionToken string
 }
 
-func NewClient(url string) *Client {
-	return &Client{
+func NewEndPoint(url string) *EndPoint {
+	return &EndPoint{
 		urlStr: url,
 		http: &http.Client{
 			Transport: &http.Transport{
@@ -109,7 +113,7 @@ func NewClient(url string) *Client {
 }
 
 // Creates a new http request object and set value on session header
-func (c *Client) newRequest(method, uriStr string, body io.Reader) (*http.Request, error) {
+func (c *EndPoint) newRequest(method, uriStr string, body io.Reader) (*http.Request, error) {
 	r, err := http.NewRequest(method, c.urlStr+uriStr, body)
 	if err != nil {
 		return nil, err

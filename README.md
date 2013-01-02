@@ -1,4 +1,3 @@
-name.com
-========
+# Name-cli
 
-name.com command line client
+The command line client for _name.com_ registrar

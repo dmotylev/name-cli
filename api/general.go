@@ -1,4 +1,4 @@
-package client
+package api
 
 import (
 	"bytes"
@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 )
 
-func (c *Client) Login(username, token string) error {
+func (c *EndPoint) Login(username, token string) error {
 	body, err := json.Marshal(struct {
 		Username string `json:"username"`
 		Token    string `json:"api_token"`
@@ -39,7 +39,7 @@ func (c *Client) Login(username, token string) error {
 	return data.Result.error()
 }
 
-func (c *Client) Logout() error {
+func (c *EndPoint) Logout() error {
 	req, err := c.newRequest("GET", "/api/logout", nil)
 	if err != nil {
 		return err
@@ -92,7 +92,7 @@ func (h *Hello) UnmarshalJSON(b []byte) error {
 	return d.Result.error()
 }
 
-func (c *Client) Hello() (*Hello, error) {
+func (c *EndPoint) Hello() (*Hello, error) {
 	req, err := c.newRequest("GET", "/api/hello", nil)
 	if err != nil {
 		return nil, err
